@@ -3,7 +3,6 @@ package com.example.todo.service;
 import com.example.todo.model.Task;
 import com.example.todo.repository.TaskRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,11 +23,11 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Task updateTask(Long taskId, Task task) {
         Task existingTask = taskRepository.findById(taskId).orElseThrow(() -> new EntityNotFoundException("Task with id {" + taskId + "} not found"));
-        existingTask.setTitle(task.getTitle());;
+        existingTask.setTitle(task.getTitle());
         existingTask.setDescription(task.getDescription());
         existingTask.setCompleted(task.isCompleted());
 
-        return taskRepository.save(existingTask)
+        return taskRepository.save(existingTask);
     }
 
     @Override

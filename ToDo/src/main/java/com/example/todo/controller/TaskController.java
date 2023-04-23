@@ -3,7 +3,6 @@ package com.example.todo.controller;
 import com.example.todo.model.Task;
 import com.example.todo.service.TaskService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +30,7 @@ public class TaskController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<void> deleteTask(@PathVariable("id") Long taskId) {
+    public ResponseEntity<Void> deleteTask(@PathVariable("id") Long taskId) {
         taskService.deleteTask(taskId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -44,7 +43,7 @@ public class TaskController {
 
     @GetMapping("/pending")
     public ResponseEntity<List<Task>> getPendingTasks(){
-        List<Task> tasks = taskService.getAllPendingTasks()
+        List<Task> tasks = taskService.getAllPendingTasks();
         return new ResponseEntity<>(tasks, HttpStatus.OK);
     }
 
