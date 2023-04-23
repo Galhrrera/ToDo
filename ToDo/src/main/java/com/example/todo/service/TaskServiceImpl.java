@@ -47,7 +47,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> getCompletedTasks() {
+    public List<Task> getAllCompletedTasks() {
         return taskRepository.findByCompleted(true);
     }
 }

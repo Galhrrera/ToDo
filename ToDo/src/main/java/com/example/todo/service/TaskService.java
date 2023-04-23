@@ -10,5 +10,5 @@ public interface TaskService {
     void deleteTask(Long taskId);
     List<Task> getAllTasks();
     List<Task> getAllPendingTasks();
-    List<Task> getCompletedTasks();
+    List<Task> getAllCompletedTasks();
 }
