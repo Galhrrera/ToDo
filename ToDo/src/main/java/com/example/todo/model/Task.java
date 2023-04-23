@@ -17,10 +17,11 @@ public class Task {
     private Long id;
     private String title;
     private String description;
+    private boolean completed;
 
-    public Task(String title, String description) {
-        //this.id = id;
+    public Task(String title, String description, boolean completed) {
         this.title = title;
         this.description = description;
+        this.completed = completed;
     }
 }
