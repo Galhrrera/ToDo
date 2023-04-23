@@ -23,9 +23,12 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Task updateTask(Long taskId, Task task) {
         Task existingTask = taskRepository.findById(taskId).orElseThrow(() -> new EntityNotFoundException("Task with id {" + taskId + "} not found"));
-        existingTask.setTitle(task.getTitle());
-        existingTask.setDescription(task.getDescription());
-        existingTask.setCompleted(task.isCompleted());
+        if (task.getDescription() != null)
+            existingTask.setDescription(task.getDescription());
+        if (task.getTitle() != null)
+            existingTask.setTitle(task.getTitle());
+        if (task.isCompleted() != existingTask.isCompleted())
+            existingTask.setCompleted(task.isCompleted());
 
         return taskRepository.save(existingTask);
     }
