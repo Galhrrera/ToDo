@@ -8,10 +8,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @RestController
 @RequestMapping("api/tasks")
 public class TaskController {
     private final TaskService taskService;
+    private static final Logger logger = LoggerFactory.getLogger(TaskController.class);
 
     public TaskController(TaskService taskService) {
         this.taskService = taskService;
@@ -20,36 +24,42 @@ public class TaskController {
     @PostMapping
     public ResponseEntity<Task> createTask(@RequestBody Task task) {
         Task createdTask = taskService.createTask(task);
+        logger.info("Task with id " + createdTask.getId() + " created");
         return new ResponseEntity<>(createdTask, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Task> updateTask(@PathVariable("id") Long taskId, @RequestBody Task task) {
         Task updatedTask = taskService.updateTask(taskId, task);
+        logger.info("Task with id " + updatedTask.getId() + " updated");
         return new ResponseEntity<>(updatedTask, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTask(@PathVariable("id") Long taskId) {
         taskService.deleteTask(taskId);
+        logger.info("Task with id " + taskId + " deleted");
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping
-    public ResponseEntity<List<Task>> getAllTasks(){
+    public ResponseEntity<List<Task>> getAllTasks() {
         List<Task> tasks = taskService.getAllTasks();
+        logger.info("All tasks consulted");
         return new ResponseEntity<>(tasks, HttpStatus.OK);
     }
 
     @GetMapping("/pending")
-    public ResponseEntity<List<Task>> getPendingTasks(){
+    public ResponseEntity<List<Task>> getPendingTasks() {
         List<Task> tasks = taskService.getAllPendingTasks();
+        logger.info("All pending tasks consulted");
         return new ResponseEntity<>(tasks, HttpStatus.OK);
     }
 
     @GetMapping("/completed")
-    public ResponseEntity<List<Task>> getCompletedTasks(){
+    public ResponseEntity<List<Task>> getCompletedTasks() {
         List<Task> tasks = taskService.getAllCompletedTasks();
+        logger.info("All completed tasks consulted");
         return new ResponseEntity<>(tasks, HttpStatus.OK);
     }
 }
