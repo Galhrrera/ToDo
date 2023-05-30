@@ -1,5 +1,6 @@
 package com.example.todo.service;
 
+import com.example.todo.model.Customer;
 import com.example.todo.model.Task;
 
 import java.util.List;
@@ -11,4 +12,7 @@ public interface TaskService {
     List<Task> getAllTasks();
     List<Task> getAllPendingTasks();
     List<Task> getAllCompletedTasks();
+    List<Task> getAllTasksByCustomer(Customer customer);
+    List<Task> getAllPendingTasksByCustomer(Customer customer);
+    List<Task> getAllCompletedTasksByCustomer(Customer customer);
 }

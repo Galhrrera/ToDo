@@ -1,5 +1,6 @@
 package com.example.todo.service;
 
+import com.example.todo.model.Customer;
 import com.example.todo.model.Task;
 import com.example.todo.repository.TaskRepository;
 import com.example.todo.service.exceptions.TaskAlreadyExistsException;
@@ -60,5 +61,20 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<Task> getAllCompletedTasks() {
         return taskRepository.findByCompleted(true);
+    }
+
+    @Override
+    public List<Task> getAllTasksByCustomer(Customer customer) {
+        return null;
+    }
+
+    @Override
+    public List<Task> getAllPendingTasksByCustomer(Customer customer) {
+        return null;
+    }
+
+    @Override
+    public List<Task> getAllCompletedTasksByCustomer(Customer customer) {
+        return null;
     }
 }

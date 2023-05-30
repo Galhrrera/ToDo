@@ -1,10 +1,7 @@
 package com.example.todo.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,8 +18,10 @@ public class Task {
     private String title;
     @NotBlank(message = "description is mandatory")
     private String description;
-
     private boolean completed;
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
     public Task(String title, String description, boolean completed) {
         this.title = title;
