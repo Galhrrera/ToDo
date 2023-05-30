@@ -2,6 +2,11 @@ package com.example.todo.controller;
 
 import com.example.todo.model.Task;
 import com.example.todo.service.TaskService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +27,14 @@ public class TaskController {
         this.taskService = taskService;
     }
 
+    @Operation(summary = "Create new task")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Task created successfully",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Task.class)) }),
+            @ApiResponse(responseCode = "400", description = "Bad request - some incomplete or null fields (title or description)",
+                    content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal server error - Task already exist (usually for duplicated task's name)")})
     @PostMapping
     public ResponseEntity<Task> createTask(@Valid @RequestBody Task task) {
         Task createdTask = taskService.createTask(task);
@@ -29,6 +42,14 @@ public class TaskController {
         return new ResponseEntity<>(createdTask, HttpStatus.OK);
     }
 
+    @Operation(summary = "Update a task")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Task updated successfully",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Task.class)) }),
+            @ApiResponse(responseCode = "400", description = "Bad request - some incomplete or null fields (title or description)",
+                    content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal server error - Task does not exist")})
     @PutMapping("/{id}")
     public ResponseEntity<Task> updateTask(@PathVariable("id") Long taskId, @Valid @RequestBody Task task) {
         Task updatedTask = taskService.updateTask(taskId, task);
@@ -36,6 +57,14 @@ public class TaskController {
         return new ResponseEntity<>(updatedTask, HttpStatus.OK);
     }
 
+    @Operation(summary = "Delete a task")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Task deleted successfully",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Task.class)) }),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal server error - Task does not exist")})
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTask(@PathVariable("id") Long taskId) {
         taskService.deleteTask(taskId);
@@ -43,6 +72,15 @@ public class TaskController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @Operation(summary = "Get all tasks")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found tasks",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Task.class)) }),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Tasks not found",
+                    content = @Content) })
     @GetMapping
     public ResponseEntity<List<Task>> getAllTasks() {
         List<Task> tasks = taskService.getAllTasks();
@@ -50,6 +88,15 @@ public class TaskController {
         return new ResponseEntity<>(tasks, HttpStatus.OK);
     }
 
+    @Operation(summary = "Get all pending tasks")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found pending tasks",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Task.class)) }),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Tasks not found",
+                    content = @Content) })
     @GetMapping("/pending")
     public ResponseEntity<List<Task>> getPendingTasks() {
         List<Task> tasks = taskService.getAllPendingTasks();
@@ -57,6 +104,15 @@ public class TaskController {
         return new ResponseEntity<>(tasks, HttpStatus.OK);
     }
 
+    @Operation(summary = "Get all completed tasks")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found completed tasks",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Task.class)) }),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Tasks not found",
+                    content = @Content) })
     @GetMapping("/completed")
     public ResponseEntity<List<Task>> getCompletedTasks() {
         List<Task> tasks = taskService.getAllCompletedTasks();
