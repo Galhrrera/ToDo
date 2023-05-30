@@ -9,6 +9,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.stereotype.Indexed;
 
 @Entity
 @Getter @Setter @NoArgsConstructor //getters, setters and no args constructor from lombok. Look imports

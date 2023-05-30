@@ -26,7 +26,7 @@ public class TaskController {
     public ResponseEntity<Task> createTask(@Valid @RequestBody Task task) {
         Task createdTask = taskService.createTask(task);
         logger.info("Task with id " + createdTask.getId() + " created");
-        return new ResponseEntity<>(createdTask, HttpStatus.CREATED);
+        return new ResponseEntity<>(createdTask, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")

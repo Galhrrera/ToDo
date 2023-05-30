@@ -2,10 +2,14 @@ package com.example.todo.service;
 
 import com.example.todo.model.Task;
 import com.example.todo.repository.TaskRepository;
+import com.example.todo.service.exceptions.TaskAlreadyExistsException;
+import com.example.todo.service.exceptions.TaskDoesNotExistException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TaskServiceImpl implements TaskService {
@@ -16,13 +20,17 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    @Transactional
     public Task createTask(Task task) {
+        Optional<Task> existingTask = taskRepository.findTasksByTitle(task.getTitle());
+        if (existingTask.isPresent())
+            throw new TaskAlreadyExistsException("A task with title "+task.getTitle()+" already exist");
         return taskRepository.save(task);
     }
 
     @Override
     public Task updateTask(Long taskId, Task task) {
-        Task existingTask = taskRepository.findById(taskId).orElseThrow(() -> new EntityNotFoundException("Task with id {" + taskId + "} not found"));
+        Task existingTask = taskRepository.findById(taskId).orElseThrow(() -> new TaskDoesNotExistException("Task with id {" + taskId + "} not found"));
         if (task.getDescription() != null)
             existingTask.setDescription(task.getDescription());
         if (task.getTitle() != null)
