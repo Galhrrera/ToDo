@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,8 +20,9 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
+@EnableWebSecurity
 @AllArgsConstructor
-public class WebSecurityConfig{
+public class WebSecurityConfig {
 
     private final UserDetailsService userDetailsService;
     private final JWTAuthorizationFilter jwtAuthorizationFilter;
@@ -34,10 +37,12 @@ public class WebSecurityConfig{
         return httpSec
                 .csrf().disable()
                 .authorizeRequests()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .httpBasic()
+                /*.requestMatchers("/swagger-ui/index.html", "/login/").permitAll() // Permitir acceso sin autenticación*/
+                .anyRequest().authenticated()
+/*                .anyRequest()
+                .authenticated()*/
+/*                .and()
+                .httpBasic()*/
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
