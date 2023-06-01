@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 @RestController
 @RequestMapping("api/tasks")
 public class TaskController {
-    /*private final TaskServiceInterface taskServiceInterface;*/
+
     private final TaskService taskService;
     private static final Logger logger = LoggerFactory.getLogger(TaskController.class);
 
