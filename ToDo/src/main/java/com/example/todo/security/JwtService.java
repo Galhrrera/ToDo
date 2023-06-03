@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Service
-public class JWTService {
+public class JwtService {
     private static final String SECRET_KEY = "792F423F4528482B4D6251655468566D597133743677397A24432646294A404E";
     private static final long EXPIRE_DURATION = 24*60*60*1000;
 

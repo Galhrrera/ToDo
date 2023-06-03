@@ -1,20 +1,23 @@
 package com.example.todo.model;
 
+import com.example.todo.security.token.Token;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 
+@Data
+@Builder
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor //getters, setters and no args constructor from lombok. Look imports
+@AllArgsConstructor
 public class Customer implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
