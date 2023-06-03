@@ -26,6 +26,10 @@ public class Customer implements UserDetails {
     @NotBlank(message = "password is mandatory")
     @Length(min = 8, message = "password length must be min 8 characters")
     private String password;
+    @Enumerated(EnumType.STRING)
+    private Role role;
+    @OneToMany(mappedBy = "customer")
+    private List<Token> tokens;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
