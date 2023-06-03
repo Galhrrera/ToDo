@@ -26,7 +26,7 @@ public class AppSecurityConfig{
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("")
+                .requestMatchers("/api/auth/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

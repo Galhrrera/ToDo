@@ -8,7 +8,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.example.todo.model.Role
+import com.example.todo.model.Role;
 
 @Service
 @RequiredArgsConstructor
